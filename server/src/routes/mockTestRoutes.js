@@ -397,20 +397,32 @@ router.get('/daily-cbt', async (req, res, next) => {
       const timing = calculateDynamicDuration(blueprint.code, formattedQuestions.length);
 
       if (!cbtTest) {
-        cbtTest = await CbtMockTest.create({
-          title: `Daily All-India CBT Mock Test (${blueprint.name}) - ${dateString}`,
-          hindiTitle: `अखिल भारतीय दैनिक सीबीटी मॉक टेस्ट (${blueprint.name}) - ${dateString}`,
-          description: `Full-length ${formattedQuestions.length}-Question realistic examination simulation following official NTA/TCS-iON patterns for ${blueprint.name}.`,
-          examCode: blueprint.code,
-          examCategory: blueprint.category,
-          dateString,
-          language,
-          totalQuestions: formattedQuestions.length,
-          durationMinutes: timing.durationMinutes,
-          positiveMarks: blueprint.positiveMarks,
-          negativeMarks: blueprint.negativeMarks,
-          questions: formattedQuestions
-        });
+        try {
+          cbtTest = await CbtMockTest.create({
+            title: `Daily All-India CBT Mock Test (${blueprint.name}) - ${dateString}`,
+            hindiTitle: `अखिल भारतीय दैनिक सीबीटी मॉक टेस्ट (${blueprint.name}) - ${dateString}`,
+            description: `Full-length ${formattedQuestions.length}-Question realistic examination simulation following official NTA/TCS-iON patterns for ${blueprint.name}.`,
+            examCode: blueprint.code,
+            examCategory: blueprint.category,
+            dateString,
+            language,
+            totalQuestions: formattedQuestions.length,
+            durationMinutes: timing.durationMinutes,
+            positiveMarks: blueprint.positiveMarks,
+            negativeMarks: blueprint.negativeMarks,
+            questions: formattedQuestions
+          });
+        } catch (createErr) {
+          if (createErr.code === 11000) {
+            cbtTest = await CbtMockTest.findOne({
+              examCode: blueprint.code,
+              dateString,
+              language
+            });
+          } else {
+            throw createErr;
+          }
+        }
       } else {
         cbtTest.questions = formattedQuestions;
         cbtTest.totalQuestions = formattedQuestions.length;

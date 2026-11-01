@@ -17,6 +17,7 @@ describe('AspirantAI Complete Backend Test Suite', () => {
   let interviewSessionId = '';
 
   beforeAll(async () => {
+    jest.setTimeout(30000);
     const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/aspirantai';
     if (mongoose.connection.readyState === 0) {
       await mongoose.connect(mongoUri);
