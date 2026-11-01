@@ -139,10 +139,25 @@ npm run build
 
 ## 🚀 Production Deployment Instructions
 
-### 1. Frontend Deployment (Vercel)
+### 1. Frontend Deployment (Vercel / Render Static Site)
+
+#### Option A: Vercel
 1. Push repository to GitHub.
 2. In Vercel, import the repository and set **Root Directory** to `client`.
 3. Set **Framework Preset** to `Vite`.
+4. Configure Environment Variables:
+   - `VITE_API_BASE_URL`: `https://your-backend-api.onrender.com/api/v1`
+   - `VITE_SOCKET_URL`: `https://your-backend-api.onrender.com`
+5. Deploy.
+
+#### Option B: Render (Static Site)
+1. In Render, create a new **Static Site** connected to your repository.
+2. If **Root Directory** is left blank (repository root):
+   - **Build Command**: `cd client && npm install --include=dev && npm run build` (or `npm run build`)
+   - **Publish Directory**: `client/dist`
+3. If **Root Directory** is set to `client`:
+   - **Build Command**: `npm install --include=dev && npm run build`
+   - **Publish Directory**: `dist`
 4. Configure Environment Variables:
    - `VITE_API_BASE_URL`: `https://your-backend-api.onrender.com/api/v1`
    - `VITE_SOCKET_URL`: `https://your-backend-api.onrender.com`

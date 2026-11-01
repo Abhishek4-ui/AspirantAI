@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node -e \"const fs = require('fs'); if (!fs.existsSync('node_modules/vite')) { require('child_process').execSync('npm install --include=dev', { stdio: 'inherit' }); }\"",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -13,11 +14,14 @@
     "@monaco-editor/react": "^4.7.0",
     "@react-three/drei": "^9.109.2",
     "@react-three/fiber": "^8.16.8",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "framer-motion": "^11.3.19",
     "lucide-react": "^0.417.0",
+    "postcss": "^8.4.39",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.25.1",
@@ -25,7 +29,9 @@
     "socket.io-client": "^4.7.5",
     "sql.js": "^1.15.2",
     "tailwind-merge": "^2.4.0",
-    "three": "^0.166.1"
+    "tailwindcss": "^3.4.7",
+    "three": "^0.166.1",
+    "vite": "^5.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
