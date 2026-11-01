@@ -1,7 +1,15 @@
 import axios from 'axios';
 
+// In production, fallback to the deployed Render backend if VITE_API_BASE_URL is not configured
+const defaultApiUrl = import.meta.env.PROD
+  ? 'https://aspirantai.onrender.com/api/v1'
+  : '/api/v1';
+
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || defaultApiUrl;
+const baseURL = rawBaseUrl.endsWith('/') ? rawBaseUrl.slice(0, -1) : rawBaseUrl;
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
+  baseURL,
   headers: {
     'Content-Type': 'application/json'
   }

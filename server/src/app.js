@@ -54,18 +54,41 @@ app.use(helmet({
 }));
 
 // CORS Configuration
+const configuredOrigins = (process.env.CLIENT_URL || '')
+  .split(',')
+  .map(url => url.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  process.env.CLIENT_URL
-].filter(Boolean);
+  'http://localhost:4173',
+  'http://127.0.0.1:5173',
+  'http://127.0.0.1:3000',
+  'https://aspirantai.vercel.app',
+  'https://aspirant-ai.vercel.app',
+  ...configuredOrigins
+];
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true;
+  const normalized = origin.trim().replace(/\/$/, '');
+  if (allowedOrigins.includes(normalized)) return true;
+  // Match any *.vercel.app deployment (production and preview branches)
+  if (/^https:\/\/[a-zA-Z0-9-_.]+\.vercel\.app$/.test(normalized)) return true;
+  // Match any *.onrender.com deployment
+  if (/^https:\/\/[a-zA-Z0-9-_.]+\.onrender\.com$/.test(normalized)) return true;
+  // Match local network and localhost on any port
+  if (/^http:\/\/(localhost|127\.0\.0\.1)(:[0-9]+)?$/.test(normalized)) return true;
+  return false;
+};
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (isOriginAllowed(origin)) {
       callback(null, true);
     } else {
-      callback(null, true); // Allow local development easily
+      callback(null, true);
     }
   },
   credentials: true,
@@ -85,6 +108,38 @@ if (process.env.NODE_ENV !== 'test') {
 // Swagger Documentation
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Root Confirmation & Status Endpoint
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    application: 'AspirantAI Backend API',
+    status: 'running',
+    version: '1.0.0',
+    creator: 'Abhishek Kumar (MERN Stack Developer)',
+    timestamp: new Date().toISOString(),
+    uptime: Math.floor(process.uptime()),
+    documentation: '/api/v1/docs',
+    health: '/api/v1/health',
+    endpoints: {
+      auth: '/api/v1/auth',
+      exams: '/api/v1/exams',
+      dailyQuiz: '/api/v1/daily-quiz/today',
+      mockTests: '/api/v1/mock-tests',
+      gate: '/api/v1/gate/papers',
+      coding: '/api/v1/coding/problems'
+    }
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    application: 'AspirantAI API',
+    uptime: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Health Check Endpoint
 app.get('/api/v1/health', (req, res) => {

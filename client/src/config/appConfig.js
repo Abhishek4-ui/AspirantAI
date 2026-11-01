@@ -46,8 +46,8 @@ export const appConfig = {
   FOOTER_COPYRIGHT: '© 2026 AspirantAI. Developed by Abhishek Kumar.',
   
   // API URLs
-  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
-  SOCKET_URL: import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000'
+  API_BASE_URL: import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://aspirantai.onrender.com/api/v1' : '/api/v1'),
+  SOCKET_URL: import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? 'https://aspirantai.onrender.com' : 'http://localhost:5001')
 };
 
 export default appConfig;
