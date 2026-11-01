@@ -1,0 +1,21 @@
+{
+  "name": "aspirantai",
+  "version": "1.0.0",
+  "description": "AspirantAI — Premium 3D AI-Powered All-India Exam Preparation Platform",
+  "private": true,
+  "scripts": {
+    "clean:ports": "lsof -ti :5001 -ti :5173 2>/dev/null | xargs kill -9 2>/dev/null || true",
+    "predev": "npm run clean:ports",
+    "dev": "concurrently -k -p \"[{name}]\" -n \"SERVER,CLIENT\" -c \"cyan,magenta\" \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "seed": "cd server && npm run seed",
+    "test": "cd server && npm test",
+    "build": "cd client && npm run build",
+    "start": "cd server && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

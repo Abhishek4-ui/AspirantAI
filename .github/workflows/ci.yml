@@ -1,0 +1,64 @@
+name: AspirantAI CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:7.0
+        ports:
+          - 27017:27017
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: |
+            server/package.json
+            client/package.json
+
+      - name: Install Server Dependencies
+        run: |
+          cd server
+          npm ci
+
+      - name: Seed Test Database
+        env:
+          MONGODB_URI: mongodb://localhost:27017/aspirantai_test
+          SESSION_SECRET: test_session_secret_jwt_2026
+          OTP_HASH_SECRET: test_otp_hmac_secret_2026
+        run: |
+          cd server
+          npm run seed
+
+      - name: Run Backend Integration Tests
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://localhost:27017/aspirantai_test
+          SESSION_SECRET: test_session_secret_jwt_2026
+          OTP_HASH_SECRET: test_otp_hmac_secret_2026
+        run: |
+          cd server
+          npm test
+
+      - name: Install Client Dependencies
+        run: |
+          cd client
+          npm ci
+
+      - name: Build Frontend Application
+        run: |
+          cd client
+          npm run build

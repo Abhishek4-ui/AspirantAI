@@ -1,0 +1,28 @@
+# AspirantAI Public Crawler Instructions
+User-agent: *
+Allow: /
+Allow: /features
+Allow: /about
+Allow: /exams
+Allow: /gate
+Allow: /coding
+Allow: /internships
+Allow: /jobs
+Allow: /roadmaps
+Allow: /projects
+Allow: /learning-library
+Allow: /calendar
+Allow: /privacy
+Allow: /terms
+
+# Disallow indexing of private student workspaces, resumes, application pipelines & administrative routes
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /applications
+Disallow: /resume-builder
+Disallow: /admin
+Disallow: /content-manager
+Disallow: /data-export
+Disallow: /api/
+
+Sitemap: https://aspirantai.in/sitemap.xml

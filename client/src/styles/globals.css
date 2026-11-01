@@ -1,0 +1,422 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================================================
+   AspirantAI — Centralized Design Token System
+   Supports: Light Mode [data-theme="light"] / html.light
+             Dark Mode  [data-theme="dark"]  / html.dark
+   ================================================================ */
+
+:root,
+[data-theme="light"],
+html.light {
+  color-scheme: light;
+
+  /* Surfaces & Canvas */
+  --bg-primary: #F5F7FC;
+  --bg-secondary: #EEF2F9;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #F8FAFC;
+  --bg-modal: #FFFFFF;
+  --bg-input: #FFFFFF;
+
+  /* Typography */
+  --text-primary: #172033;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-inverse: #FFFFFF;
+
+  /* Borders & Dividers */
+  --border-color: #DCE4F0;
+  --border-subtle: #E8EEF7;
+  --border-strong: #CBD5E1;
+
+  /* Brand & Accents */
+  --primary: #285FE8;
+  --primary-hover: #1D4ED8;
+  --accent: #6D4AFF;
+  --accent-cyan: #0284C7;
+  --accent-purple: #7C3AED;
+
+  /* Status Colors */
+  --success: #059669;
+  --success-bg: #ECFDF5;
+  --success-border: #A7F3D0;
+  --warning: #D97706;
+  --warning-bg: #FEF3C7;
+  --warning-border: #FDE68A;
+  --error: #E11D48;
+  --error-bg: #FFF1F2;
+  --error-border: #FECDD3;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 16px -2px rgba(15, 23, 42, 0.07);
+  --shadow-lg: 0 10px 30px -4px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 4px 16px rgba(40, 95, 232, 0.2);
+}
+
+[data-theme="dark"],
+html.dark {
+  color-scheme: dark;
+
+  /* Surfaces & Canvas */
+  --bg-primary: #080D1B;
+  --bg-secondary: #0D1628;
+  --bg-card: #111B2E;
+  --bg-elevated: #192640;
+  --bg-modal: #111B2E;
+  --bg-input: #0D1628;
+
+  /* Typography */
+  --text-primary: #F1F5F9;
+  --text-secondary: #C0CBDA;
+  --text-muted: #9AA9BF;
+  --text-inverse: #0F172A;
+
+  /* Borders & Dividers */
+  --border-color: #2A3952;
+  --border-subtle: #1E293B;
+  --border-strong: #334155;
+
+  /* Brand & Accents */
+  --primary: #60A5FA;
+  --primary-hover: #93C5FD;
+  --accent: #A78BFA;
+  --accent-cyan: #00F5D4;
+  --accent-purple: #9D4EDD;
+
+  /* Status Colors */
+  --success: #34D399;
+  --success-bg: rgba(52, 211, 153, 0.12);
+  --success-border: rgba(52, 211, 153, 0.25);
+  --warning: #FBBF24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --warning-border: rgba(251, 191, 36, 0.25);
+  --error: #FDA4AF;
+  --error-bg: rgba(253, 164, 175, 0.12);
+  --error-border: rgba(253, 164, 175, 0.25);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 36px -4px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 25px rgba(0, 102, 255, 0.45);
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(40, 95, 232, 0.05) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(109, 74, 255, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+  html.light body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(40, 95, 232, 0.03) 0%, transparent 40%),
+      radial-gradient(circle at 85% 85%, rgba(109, 74, 255, 0.03) 0%, transparent 40%);
+  }
+
+  /* Form Elements Base Contrast */
+  select, input, textarea {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+  }
+
+  html.light select, html.light input, html.light textarea {
+    background-color: #FFFFFF;
+    color: #172033;
+    border-color: var(--border-color);
+  }
+
+  select option {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+  }
+
+  html.light select option {
+    background-color: #FFFFFF;
+    color: #172033;
+  }
+}
+
+/* Glassmorphism Panels */
+.glass-panel {
+  background: rgba(17, 27, 46, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.glass-panel-hover {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+html.light .glass-panel-hover:hover {
+  background: #FFFFFF;
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+html.light .glass-input {
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  color: #172033;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(40, 95, 232, 0.15);
+}
+
+html.light .glass-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(40, 95, 232, 0.15);
+}
+
+/* ================================================================
+   CRITICAL LIGHT MODE TEXT & BUTTON ACCESSIBILITY FIXES
+   ================================================================ */
+
+/* 1. Ensure solid action buttons, badges, and gradient elements PRESERVE high-contrast white text */
+html.light button[class*="bg-electric-blue"],
+html.light button[class*="bg-blue-"],
+html.light button[class*="bg-emerald-"],
+html.light button[class*="bg-purple-"],
+html.light button[class*="bg-indigo-"],
+html.light button[class*="bg-red-"],
+html.light button[class*="bg-rose-"],
+html.light button[class*="from-"],
+html.light a[class*="bg-electric-blue"],
+html.light a[class*="bg-blue-"],
+html.light a[class*="bg-emerald-"],
+html.light a[class*="bg-purple-"],
+html.light a[class*="bg-indigo-"],
+html.light a[class*="bg-red-"],
+html.light a[class*="bg-rose-"],
+html.light a[class*="from-"],
+html.light .btn-primary,
+html.light .preserve-white {
+  color: #FFFFFF !important;
+}
+
+html.light button[class*="bg-electric-blue"] *,
+html.light button[class*="bg-blue-"] *,
+html.light button[class*="bg-emerald-"] *,
+html.light button[class*="bg-purple-"] *,
+html.light button[class*="bg-indigo-"] *,
+html.light button[class*="bg-red-"] *,
+html.light button[class*="bg-rose-"] *,
+html.light button[class*="from-"] *,
+html.light a[class*="bg-electric-blue"] *,
+html.light a[class*="bg-blue-"] *,
+html.light a[class*="bg-emerald-"] *,
+html.light a[class*="bg-purple-"] *,
+html.light a[class*="bg-indigo-"] *,
+html.light a[class*="bg-red-"] *,
+html.light a[class*="bg-rose-"] *,
+html.light a[class*="from-"] *,
+html.light .btn-primary * {
+  color: #FFFFFF !important;
+}
+
+/* 2. In Light Mode, convert headings and general text to accessible dark text */
+html.light h1:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white),
+html.light h2:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white),
+html.light h3:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white),
+html.light h4:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white),
+html.light h5:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white),
+html.light h6:not([class*="bg-"]):not([class*="from-"]):not([class*="text-transparent"]):not(.preserve-white) {
+  color: var(--text-primary);
+}
+
+/* Convert text-white on non-action-buttons to readable dark text in Light Mode */
+html.light .text-white:not(button):not(a[class*="bg-"]):not(a[class*="from-"]):not([class*="bg-blue-"]):not([class*="bg-electric"]):not([class*="bg-emerald-"]):not([class*="bg-purple-"]):not([class*="bg-indigo-"]):not([class*="bg-red-"]):not([class*="bg-rose-"]):not([class*="from-"]):not(.preserve-white) {
+  color: var(--text-primary);
+}
+
+html.light .text-slate-100 {
+  color: var(--text-primary);
+}
+html.light .text-slate-200 {
+  color: var(--text-primary);
+}
+html.light .text-slate-300 {
+  color: var(--text-secondary);
+}
+html.light .text-slate-400 {
+  color: var(--text-secondary);
+}
+html.light .text-slate-500 {
+  color: var(--text-muted);
+}
+
+/* Form controls & inputs contrast in Light Mode */
+html.light input:not([type="submit"]):not([type="button"]):not([class*="bg-blue-"]):not([class*="bg-electric"]):not([class*="from-"]),
+html.light select,
+html.light textarea {
+  background-color: #FFFFFF !important;
+  color: #172033 !important;
+  border-color: var(--border-color) !important;
+}
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #94A3B8 !important;
+}
+
+/* Code & Terminal Pre Blocks */
+html.light pre {
+  background-color: #0F172A !important;
+  color: #E2E8F0 !important;
+  border-color: #1E293B !important;
+}
+html.light pre code,
+html.light pre span {
+  color: inherit;
+}
+
+/* 3. Convert low-contrast neon accents to rich accessible colors in Light Mode */
+html.light .text-neon-cyan {
+  color: var(--accent-cyan) !important;
+}
+html.light .text-cyan-400 {
+  color: var(--accent-cyan) !important;
+}
+html.light .text-cyan-300 {
+  color: var(--accent-cyan) !important;
+}
+html.light .text-neon-purple {
+  color: var(--accent-purple) !important;
+}
+html.light .border-neon-cyan {
+  border-color: var(--accent-cyan) !important;
+}
+html.light .border-neon-purple {
+  border-color: var(--accent-purple) !important;
+}
+
+/* Status message and badge contrast in Light Mode */
+html.light [class*="bg-emerald-950"],
+html.light [class*="bg-green-950"] {
+  background-color: var(--success-bg) !important;
+  border-color: var(--success-border) !important;
+}
+html.light .text-emerald-300,
+html.light .text-emerald-400,
+html.light .text-green-300,
+html.light .text-green-400 {
+  color: var(--success) !important;
+}
+
+html.light [class*="bg-red-950"],
+html.light [class*="bg-rose-950"] {
+  background-color: var(--error-bg) !important;
+  border-color: var(--error-border) !important;
+}
+html.light .text-red-300,
+html.light .text-red-400,
+html.light .text-rose-300,
+html.light .text-rose-400 {
+  color: var(--error) !important;
+}
+
+html.light [class*="bg-amber-950"],
+html.light [class*="bg-yellow-950"] {
+  background-color: var(--warning-bg) !important;
+  border-color: var(--warning-border) !important;
+}
+html.light .text-amber-300,
+html.light .text-amber-400,
+html.light .text-yellow-300,
+html.light .text-yellow-400 {
+  color: var(--warning) !important;
+}
+
+html.light [class*="bg-purple-950"] {
+  background-color: #F5F3FF !important;
+  border-color: #DDD6FE !important;
+}
+html.light .text-purple-300,
+html.light .text-purple-400 {
+  color: var(--accent-purple) !important;
+}
+
+/* 4. Map legacy navy & slate backgrounds and borders to centralized tokens in Light Mode */
+html.light .bg-navy-950,
+html.light .bg-navy-900,
+html.light .bg-navy-850,
+html.light .bg-slate-950,
+html.light .bg-slate-900,
+html.light [class*="bg-slate-900/"],
+html.light [class*="bg-slate-950/"],
+html.light [class*="bg-navy-900/"],
+html.light [class*="bg-navy-950/"] {
+  background-color: var(--bg-card) !important;
+}
+
+html.light .bg-navy-800,
+html.light .bg-slate-800,
+html.light [class*="bg-slate-800/"],
+html.light [class*="bg-navy-800/"] {
+  background-color: var(--bg-elevated) !important;
+}
+
+html.light .border-slate-800,
+html.light .border-slate-700,
+html.light [class*="border-slate-800/"],
+html.light [class*="border-slate-700/"] {
+  border-color: var(--border-color) !important;
+}
+
+/* 5. Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}

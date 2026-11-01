@@ -1,0 +1,16 @@
+{
+  "short_name": "AspirantAI",
+  "name": "AspirantAI — Premium 3D AI-Powered Exam Preparation Platform",
+  "icons": [
+    {
+      "src": "/assets/brand/aspirantai-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#060B18",
+  "theme_color": "#0066FF",
+  "display": "standalone",
+  "orientation": "portrait"
+}

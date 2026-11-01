@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060B18"/>
+      <stop offset="50%" stop-color="#0B132B"/>
+      <stop offset="100%" stop-color="#1C2541"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00D4FF"/>
+      <stop offset="50%" stop-color="#0066FF"/>
+      <stop offset="100%" stop-color="#9D4EDD"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="15" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <circle cx="300" cy="300" r="240" fill="none" stroke="url(#accent)" stroke-width="4" opacity="0.8" filter="url(#glow)"/>
+  <circle cx="300" cy="220" r="100" fill="#1C2541" stroke="#00D4FF" stroke-width="3"/>
+  <!-- Stylized developer avatar -->
+  <circle cx="300" cy="210" r="60" fill="#0066FF" opacity="0.7"/>
+  <path d="M 180 440 C 180 340, 420 340, 420 440 Z" fill="#1C2541" stroke="#00D4FF" stroke-width="3"/>
+  <text x="300" y="490" text-anchor="middle" font-family="Outfit, Inter, sans-serif" font-size="32" font-weight="bold" fill="#FFFFFF">Abhishek Kumar</text>
+  <text x="300" y="525" text-anchor="middle" font-family="Inter, sans-serif" font-size="20" font-weight="600" fill="#00D4FF">MERN Stack Developer</text>
+  <text x="300" y="555" text-anchor="middle" font-family="Inter, sans-serif" font-size="16" fill="#94A3B8">Building Modern Web Experiences</text>
+</svg>
