@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // In production, fallback to the deployed Render backend if VITE_API_BASE_URL is not configured
 const defaultApiUrl = import.meta.env.PROD
-  ? 'https://aspirantai.onrender.com/api/v1'
+  ? 'https://aspirantai-api.onrender.com/api/v1'
   : '/api/v1';
 
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || defaultApiUrl;

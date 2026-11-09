@@ -36,7 +36,7 @@ export default function SignupPage() {
   const [savingOAuth, setSavingOAuth] = useState(false);
   const [copiedCallback, setCopiedCallback] = useState(false);
 
-  const apiBase = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://aspirantai.onrender.com/api/v1' : 'http://localhost:5001/api/v1');
+  const apiBase = import.meta.env.VITE_API_BASE_URL || (import.meta.env.PROD ? 'https://aspirantai-api.onrender.com/api/v1' : 'http://localhost:5001/api/v1');
   const callbackUrl = `${apiBase.replace(/\/$/, '')}/auth/google/callback`;
 
   const handleChange = (e) => {
