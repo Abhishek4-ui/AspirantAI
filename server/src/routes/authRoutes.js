@@ -314,12 +314,17 @@ router.post('/configure-oauth', async (req, res) => {
   }
 });
 
+const getClientRedirectUrl = () => {
+  const envUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  return envUrl.split(',')[0].trim().replace(/\/$/, '') || 'http://localhost:5173';
+};
+
 /**
  * @route GET /api/v1/auth/google/callback
  * Handles Google OAuth redirect and code exchange
  */
 router.get('/google/callback', async (req, res) => {
-  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  const clientUrl = getClientRedirectUrl();
   const { code, error } = req.query;
 
   if (error || !code) {
@@ -512,7 +517,7 @@ router.get('/github/url', (req, res) => {
  * Handles GitHub OAuth redirect and code exchange
  */
 router.get('/github/callback', async (req, res) => {
-  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  const clientUrl = getClientRedirectUrl();
   const { code, error } = req.query;
 
   if (error || !code) {

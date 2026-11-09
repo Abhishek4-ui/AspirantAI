@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
 import { Sparkles, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
+import api from '../../services/api';
 
 export default function OAuthCallbackPage() {
   const [searchParams] = useSearchParams();
@@ -12,9 +13,11 @@ export default function OAuthCallbackPage() {
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
+    let isMounted = true;
     const token = searchParams.get('token');
+    const code = searchParams.get('code');
     const error = searchParams.get('error');
-    const provider = searchParams.get('provider') || 'OAuth';
+    const provider = searchParams.get('provider') || localStorage.getItem('aspirantai_oauth_provider') || 'google';
 
     if (error) {
       setStatus('error');
@@ -34,10 +37,42 @@ export default function OAuthCallbackPage() {
         setStatus('error');
         setErrorMessage('Failed to finalize authentication session.');
       }
-    } else {
-      setStatus('error');
-      setErrorMessage('No authentication token received from identity provider.');
+      return;
     }
+
+    if (code) {
+      setStatus('processing');
+      const normalizedProvider = provider.toLowerCase().includes('git') ? 'github' : 'google';
+      api.post(`/auth/${normalizedProvider}/callback`, { code })
+        .then((res) => {
+          if (!isMounted) return;
+          if (res.data?.token) {
+            setSessionToken(res.data.token);
+            setStatus('success');
+            setTimeout(() => {
+              navigate('/dashboard');
+            }, 1200);
+          } else {
+            setStatus('error');
+            setErrorMessage('Could not retrieve session token.');
+          }
+        })
+        .catch((err) => {
+          if (!isMounted) return;
+          setStatus('error');
+          setErrorMessage(
+            err.response?.data?.message || err.message || 'OAuth verification failed.'
+          );
+        });
+      return;
+    }
+
+    setStatus('error');
+    setErrorMessage('No authentication token or authorization code received from identity provider.');
+
+    return () => {
+      isMounted = false;
+    };
   }, [searchParams, setSessionToken, navigate]);
 
   return (

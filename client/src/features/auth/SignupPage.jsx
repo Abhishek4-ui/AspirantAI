@@ -51,6 +51,9 @@ export default function SignupPage() {
     setError('');
     setOauthNotice('');
     try {
+      localStorage.setItem('aspirantai_oauth_provider', provider);
+    } catch (_) {}
+    try {
       const res = await api.get(`/auth/${provider}/url`);
       if (res.data.configured && res.data.url) {
         window.location.href = res.data.url;
