@@ -76,7 +76,7 @@ const startServer = async () => {
     }
   });
 
-  server.listen(PORT, () => {
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`====================================================`);
     console.log(`🚀 AspirantAI Server running on port ${PORT}`);
     console.log(`📚 Environment: ${process.env.NODE_ENV || 'development'}`);

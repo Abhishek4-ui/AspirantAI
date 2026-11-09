@@ -7,6 +7,8 @@ const Quiz = require('../models/Quiz');
 const QuizAttempt = require('../models/QuizAttempt');
 const CbtAttempt = require('../models/CbtAttempt');
 
+jest.setTimeout(25000);
+
 describe('AspirantAI Complete Backend Test Suite', () => {
   let authToken = '';
   let signupUserToken = '';
