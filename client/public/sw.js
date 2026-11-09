@@ -1,42 +1,34 @@
-const CACHE_NAME = 'aspirantai-cache-v1';
-const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/assets/brand/aspirantai-logo.svg',
-  '/assets/brand/aspirantai-icon.svg'
-];
+// AspirantAI Service Worker - Cache Busting & Fresh Asset Delivery
+const CACHE_NAME = 'aspirantai-cache-v4';
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(STATIC_ASSETS);
-    })
-  );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
-      );
-    })
+      return Promise.all(keys.map((key) => caches.delete(key)));
+    }).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
+// Network-first strategy for everything so users never receive stale HTML or chunk mismatches
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   // Pass API and socket requests directly to network
   if (event.request.url.includes('/api/') || event.request.url.includes('/socket.io/')) {
     return;
   }
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request).catch(() => {
-        return caches.match('/index.html');
-      });
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cached) => cached || caches.match('/'));
+      })
   );
 });
